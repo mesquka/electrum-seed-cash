@@ -1,0 +1,33 @@
+{
+  "name": "electrum-seed-cash",
+  "version": "0.0.1",
+  "description": "Tracks BCH Electrum Servers",
+  "main": "index.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "clean": "rm -rf .data"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mesquka/electrum-seed-cash.git"
+  },
+  "author": "Kieran Mesquita <mesquka@pm.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mesquka/electrum-seed-cash/issues"
+  },
+  "homepage": "https://github.com/mesquka/electrum-seed-cash#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsdoc": "^30.3.2"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "electrum-cash": "^2.0.2",
+    "express": "^4.17.1",
+    "level": "^6.0.1"
+  }
+}

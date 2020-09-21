@@ -1,0 +1,41 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:jsdoc/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "ignorePatterns": [
+        "docs"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2019
+    },
+    "plugins": [
+        "jsdoc"
+    ],
+    "rules": {
+        "no-param-reassign": "off",
+        "jsdoc/check-indentation": 1,
+        "jsdoc/require-description": 1,
+        "jsdoc/require-jsdoc": ["warn", {
+            "require": {
+                "ArrowFunctionExpression": true,
+                "ClassExpression": true,
+                "FunctionDeclaration": true,
+                "FunctionExpression": true,
+                "MethodDefinition": true
+            }
+        }],
+        "jsdoc/require-hyphen-before-param-description": "warn"
+    }
+}
