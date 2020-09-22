@@ -135,8 +135,6 @@ app.get('/seed', (req, res) => {
 
 app.get('/servers', (req, res) => {
   getServers().then((serverList) => {
-    console.log(req.query);
-
     // Filter for supported version
     if (req.query.version) {
       serverList.mainnet = serverList.mainnet.filter(
