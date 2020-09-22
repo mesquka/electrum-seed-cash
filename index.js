@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const semver = require('semver');
 const electrum = require('./electrum');
 const db = require('./database');
 
@@ -92,6 +93,9 @@ function getServers() {
 app.get('/', (req, res) => {
   res.json({
     status: 'online',
+    help: '/server lists all nodes crawled, /server?version=1.4.4 lists all nodes compatible with electrum protocol version 1.4.4,'
+    + ' /server?websockets=true to filter only servers with websockets support, /server?secure=true to filter only servers with tls/ssl support,'
+    + ' /server?version=1.4.4&websockets=true&secure=true to get only servers supporting version 1.4.4 and have websockets with ssl',
   });
 });
 
@@ -131,6 +135,48 @@ app.get('/seed', (req, res) => {
 
 app.get('/servers', (req, res) => {
   getServers().then((serverList) => {
+    console.log(req.query);
+
+    // Filter for supported version
+    if (req.query.version) {
+      serverList.mainnet = serverList.mainnet.filter(
+        (server) => semver.satisfies(
+          semver.coerce(req.query.version).version,
+          `>=${server.version.min} <=${server.version.max}`,
+        ),
+      );
+      serverList.testnet = serverList.testnet.filter(
+        (server) => semver.satisfies(
+          semver.coerce(req.query.version).version,
+          `>=${server.version.min} <=${server.version.max}`,
+        ),
+      );
+    }
+
+    // Filter for websockets and tls/ssl
+    if (req.query.websockets && req.query.secure) {
+      serverList.mainnet = serverList.mainnet.filter(
+        (server) => server.transports.wss_port,
+      );
+      serverList.testnet = serverList.testnet.filter(
+        (server) => server.transports.wss_port,
+      );
+    } else if (req.query.websockets) {
+      serverList.mainnet = serverList.mainnet.filter(
+        (server) => server.transports.ws_port || server.transports.wss_port,
+      );
+      serverList.testnet = serverList.testnet.filter(
+        (server) => server.transports.ws_port || server.transports.wss_port,
+      );
+    } else if (req.query.secure) {
+      serverList.mainnet = serverList.mainnet.filter(
+        (server) => server.transports.ssl_port,
+      );
+      serverList.testnet = serverList.testnet.filter(
+        (server) => server.transports.ssl_port,
+      );
+    }
+
     res.json(serverList);
   });
 });
