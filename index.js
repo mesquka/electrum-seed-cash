@@ -95,7 +95,7 @@ app.get('/', (req, res) => {
     status: 'online',
     help: '/servers lists all nodes crawled, /servers?version=1.4.4 lists all nodes compatible with electrum protocol version 1.4.4,'
     + ' /servers?websockets=true to filter only servers with websockets support, /servers?secure=true to filter only servers with tls/ssl support,'
-    + ' /servers?version=1.4.4&websockets=true&secure=true to get only servers supporting version 1.4.4 and have websockets with ssl'
+    + ' /servers?version=1.4.4&websockets=true&secure=true to get only servers supporting version 1.4.4 and have websockets with ssl, '
     + 'POST /servers with `{"host":"electrum.imaginary.cash","version":{"max":"1.4.4"},"transports":{"ssl_port":50002}}` adds `electrum.imaginary.cash`'
     + 'to database',
   });
